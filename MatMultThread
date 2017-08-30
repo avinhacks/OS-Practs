@@ -1,0 +1,115 @@
+#include<stdio.h>
+#include<pthread.h>
+#include<stdlib.h>
+
+typedef struct mat
+{
+	int r1,c1,c2;
+	int **m1, **m2, **m3;
+}mat;
+
+void accept(int **a,int row,int col);
+void display(int **a,int row,int col);
+int **mallocate(int row,int col);
+void* mult(void*);
+
+int main()
+{
+	int **a,**b, **c;
+	int row1,row2,col1,col2;
+	mat *m;
+	pthread_t tid;
+
+	printf("Enter the rows and columns for matrix 1\n");
+	scanf("%d%d",&row1,&col1);
+	a=mallocate(row1,col1);
+	accept(a,row1,col1);
+
+	printf("Enter the rows and columns for matrix 2\n");
+	scanf("%d%d",&row2,&col2);
+	b=mallocate(row2,col2);
+	accept(b,row2,col2);
+
+	c = mallocate(row1,col2);
+
+	printf("Matrix 1 is:\n");
+	display(a,row1,col1);
+	printf("\n");
+	printf("Matrix 2 is:\n");
+	display(b,row2,col2);
+
+	m->m1 = a;
+	m->m2 = b;
+	m->m3 = c;
+	m->r1 = row1;
+	m->c1 = col1;
+	m->c2 = col2;
+
+	if(col1==row2)
+	{
+		printf("Multiplication is:\n");
+		pthread_create(&tid, NULL,mult,(void*)m);
+		pthread_join(tid,NULL);
+		display(c,row1,col2);
+		printf("inside if");
+	}
+	else
+	{
+		printf("Matrix multiplication is not possible\n");
+	}
+
+	return 0;
+}
+int **mallocate(int row,int col)
+{
+	int **a;
+	int i;
+	a=(int**)malloc(sizeof(int*)*row);
+	for(i=0;i<row;i++)
+	{
+		a[i]=(int*)malloc(sizeof(int)*col);
+	}
+	return a;
+}
+void accept(int **a,int row,int col)
+{
+	int i,j;
+	printf("Enter the elements\n");
+	for(i=0;i<row;i++)
+	{
+		for(j=0;j<col;j++)
+		{
+			scanf("%d",(*(a+i)+j));
+		}
+	}
+}
+void display(int **a,int row,int col)
+{
+	int i,j;
+	for(i=0;i<row;i++)
+	{
+		for(j=0;j<col;j++)
+		{
+			printf("%d\t",*(*(a+i)+j));
+		}
+		printf("\n");
+	}
+}
+
+void* mult(void* arg)
+{
+	mat *t = (mat *)arg;
+	int i,j,k;
+	for(i=0;i<t->r1;i++)
+	{
+		for(j=0;j<t->c1;j++)
+		{
+			*(*(t->m3+i)+j)=0;
+			for (k=0;k<t->c2;k++)
+			{
+				*(*(t->m3+i)+j)+=(*(*(t->m1+i)+k)**(*(t->m2+k)+j));
+			}
+		}
+	}
+	return NULL;
+}
