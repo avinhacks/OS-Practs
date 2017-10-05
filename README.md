@@ -1,5 +1,5 @@
 # OS-Practs
-TE-IT OS PRACTICLES
+UNIPUNE TE-IT OS PRACTICALS
 
 Assignment No. 1: 
 Shell programming
@@ -10,10 +10,12 @@ e) Modify a record. f) Exit.
 Assignment No. 2: 
 Process control system calls: The demonstration of FORK, EXECVE and WAIT system calls
 along with zombie and orphan states.
+
 a. Implement the C program in which main program accepts the integers to be sorted. Main
 program uses the FORK system call to create a new process called a child process. Parent process
 sorts the integers using sorting algorithm and waits for child process using WAIT system call to
 sort the integers using any sorting algorithm. Also demonstrate zombie and orphan states.
+
 b. Implement the C program in which main program accepts an integer array. Main program uses
 the FORK system call to create a new process called a child process. Parent process sorts an
 integer array and passes the sorted array to child process through the command line arguments
